@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payroll Management</title>
+
+    <link rel="stylesheet"
+          href="payroll.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <span>HR</span>
+        Management
+
+    </div>
+
+
+    <ul class="menu">
+
+        <li onclick="goTo('index.html')">
+            🏠 Dashboard
+        </li>
+
+        <li onclick="goTo('employees.html')">
+            👨‍💼 Employees
+        </li>
+
+        <li onclick="goTo('attendance.html')">
+            📅 Attendance
+        </li>
+
+        <li onclick="goTo('leave.html')">
+            📝 Leave Management
+        </li>
+
+        <li class="active">
+            💰 Payroll
+        </li>
+
+        <li onclick="goTo('reports.html')">
+            📊 Reports
+        </li>
+
+        <li onclick="goTo('settings.html')">
+            ⚙️ Settings
+        </li>
+
+    </ul>
+
+
+    <div class="logout"
+         onclick="logout()">
+
+        🚪 Logout
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Payroll Management
+            </h1>
+
+            <p>
+                Manage employee salaries and payroll
+            </p>
+
+        </div>
+
+
+        <div class="profile">
+
+            <div class="avatar">
+                AD
+            </div>
+
+            <div>
+
+                <strong>
+                    Admin
+                </strong>
+
+                <small>
+                    HR Manager
+                </small>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         SUMMARY CARDS
+    ================================================== -->
+
+    <section class="summary">
+
+
+        <div class="card">
+
+            <div class="card-icon employees-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3>
+                    Total Employees
+                </h3>
+
+                <h2 id="employeeCount">
+                    0
+                </h2>
+
+                <p>
+                    Payroll employees
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card-icon salary-icon">
+                ₹
+            </div>
+
+            <div>
+
+                <h3>
+                    Gross Salary
+                </h3>
+
+                <h2 id="grossSalary">
+                    ₹0
+                </h2>
+
+                <p>
+                    This month
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card-icon deduction-icon">
+                −
+            </div>
+
+            <div>
+
+                <h3>
+                    Total Deductions
+                </h3>
+
+                <h2 id="totalDeduction">
+                    ₹0
+                </h2>
+
+                <p>
+                    This month
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card-icon net-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <h3>
+                    Net Payroll
+                </h3>
+
+                <h2 id="netPayroll">
+                    ₹0
+                </h2>
+
+                <p>
+                    This month
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         GENERATE PAYROLL
+    ================================================== -->
+
+    <section class="payroll-action">
+
+        <div>
+
+            <h2>
+                Generate Payroll
+            </h2>
+
+            <p>
+                Select payroll month and generate salary
+            </p>
+
+        </div>
+
+
+        <button
+            class="generate-btn"
+            onclick="openPayrollForm()">
+
+            + Generate Payroll
+
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FILTER
+    ================================================== -->
+
+    <section class="filters">
+
+
+        <div class="filter-group">
+
+            <label>
+                Payroll Month
+            </label>
+
+            <input
+                type="month"
+                id="payrollMonth">
+
+        </div>
+
+
+
+        <div class="filter-group">
+
+            <label>
+                Search Employee
+            </label>
+
+            <input
+                type="text"
+                id="employeeSearch"
+                placeholder="Search employee...">
+
+        </div>
+
+
+        <button
+            class="filter-btn"
+            onclick="applyFilter()">
+
+            Apply Filter
+
+        </button>
+
+
+        <button
+            class="clear-btn"
+            onclick="clearFilter()">
+
+            Clear
+
+        </button>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         PAYROLL TABLE
+    ================================================== -->
+
+    <section class="payroll-table">
+
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+                    Employee Payroll
+                </h2>
+
+                <p id="tableDescription">
+                    Loading payroll records...
+                </p>
+
+            </div>
+
+
+            <button
+                class="export-btn"
+                onclick="exportPayroll()">
+
+                ↓ Export
+
+            </button>
+
+        </div>
+
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Employee
+                        </th>
+
+                        <th>
+                            Employee ID
+                        </th>
+
+                        <th>
+                            Basic Salary
+                        </th>
+
+                        <th>
+                            Allowances
+                        </th>
+
+                        <th>
+                            Gross Salary
+                        </th>
+
+                        <th>
+                            Deductions
+                        </th>
+
+                        <th>
+                            Net Salary
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="payrollTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     PAYROLL FORM MODAL
+===================================================== -->
+
+<div class="modal"
+     id="payrollModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Generate Payroll
+            </h2>
+
+            <button
+                onclick="closePayrollForm()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form
+            id="payrollForm">
+
+
+            <label>
+                Employee Name
+            </label>
+
+            <input
+                type="text"
+                id="employeeName"
+                placeholder="Enter employee name"
+                required>
+
+
+            <label>
+                Employee ID
+            </label>
+
+            <input
+                type="text"
+                id="employeeId"
+                placeholder="EMP006"
+                required>
+
+
+            <label>
+                Basic Salary
+            </label>
+
+            <input
+                type="number"
+                id="basicSalary"
+                placeholder="30000"
+                required>
+
+
+            <label>
+                Allowances
+            </label>
+
+            <input
+                type="number"
+                id="allowances"
+                placeholder="5000"
+                required>
+
+
+            <label>
+                Deductions
+            </label>
+
+            <input
+                type="number"
+                id="deductions"
+                placeholder="2500"
+                required>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closePayrollForm()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Save Payroll
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const API =
+    "http://localhost:5000";
+
+let payrollData = [];
+
+
+// =====================================================
+// PAGE LOAD
+// =====================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadPayroll();
+
+        loadSummary();
+
+    }
+);
+
+
+// =====================================================
+// LOAD PAYROLL
+// =====================================================
+
+async function loadPayroll() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/payroll`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Backend error"
+            );
+
+        }
+
+
+        payrollData =
+            await response.json();
+
+
+        displayPayroll(
+            payrollData
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "tableDescription"
+        ).textContent =
+            "Unable to connect to backend";
+
+
+        document.getElementById(
+            "payrollTableBody"
+        ).innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty error">
+
+                    Unable to connect to backend.
+                    Make sure server.js is running.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD SUMMARY
+// =====================================================
+
+async function loadSummary() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/payroll/summary`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "employeeCount"
+        ).textContent =
+            data.totalEmployees;
+
+
+        document.getElementById(
+            "grossSalary"
+        ).textContent =
+            formatCurrency(
+                data.grossSalary
+            );
+
+
+        document.getElementById(
+            "totalDeduction"
+        ).textContent =
+            formatCurrency(
+                data.totalDeduction
+            );
+
+
+        document.getElementById(
+            "netPayroll"
+        ).textContent =
+            formatCurrency(
+                data.netPayroll
+            );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =====================================================
+// DISPLAY PAYROLL
+// =====================================================
+
+function displayPayroll(records) {
+
+    const tbody =
+        document.getElementById(
+            "payrollTableBody"
+        );
+
+
+    if (!records.length) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    No payroll records found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    records.forEach(
+        employee => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const name =
+                employee.employeeName ||
+                "Employee";
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="employee">
+
+                        <div class="employee-avatar">
+
+                            ${name
+                                .substring(0, 2)
+                                .toUpperCase()}
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ${name}
+                            </strong>
+
+                            <small>
+                                Employee
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    ${employee.employeeId}
+                </td>
+
+
+                <td>
+                    ${formatCurrency(
+                        employee.basicSalary
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatCurrency(
+                        employee.allowances
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatCurrency(
+                        employee.grossSalary
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatCurrency(
+                        employee.deductions
+                    )}
+                </td>
+
+
+                <td>
+
+                    <strong>
+                        ${formatCurrency(
+                            employee.netSalary
+                        )}
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    <span class="status">
+
+                        ${employee.status}
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+
+    document.getElementById(
+        "tableDescription"
+    ).textContent =
+        `${records.length} payroll records`;
+
+}
+
+
+// =====================================================
+// FILTER
+// =====================================================
+
+function applyFilter() {
+
+    const search =
+        document.getElementById(
+            "employeeSearch"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    if (!search) {
+
+        displayPayroll(
+            payrollData
+        );
+
+        return;
+
+    }
+
+
+    const filtered =
+        payrollData.filter(
+            employee =>
+
+                employee.employeeName
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                employee.employeeId
+                    .toLowerCase()
+                    .includes(search)
+        );
+
+
+    displayPayroll(
+        filtered
+    );
+
+}
+
+
+// =====================================================
+// CLEAR FILTER
+// =====================================================
+
+function clearFilter() {
+
+    document.getElementById(
+        "employeeSearch"
+    ).value = "";
+
+
+    displayPayroll(
+        payrollData
+    );
+
+}
+
+
+// =====================================================
+// ADD PAYROLL
+// =====================================================
+
+document.getElementById(
+    "payrollForm"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const data = {
+
+            employeeName:
+                document.getElementById(
+                    "employeeName"
+                ).value,
+
+            employeeId:
+                document.getElementById(
+                    "employeeId"
+                ).value,
+
+            basicSalary:
+                document.getElementById(
+                    "basicSalary"
+                ).value,
+
+            allowances:
+                document.getElementById(
+                    "allowances"
+                ).value,
+
+            deductions:
+                document.getElementById(
+                    "deductions"
+                ).value
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API}/api/payroll`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(data)
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.message
+                );
+
+            }
+
+
+            alert(
+                "Payroll saved successfully!"
+            );
+
+
+            closePayrollForm();
+
+
+            document.getElementById(
+                "payrollForm"
+            ).reset();
+
+
+            loadPayroll();
+
+            loadSummary();
+
+
+        } catch (error) {
+
+            alert(
+                "Unable to save payroll."
+            );
+
+            console.error(error);
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// MODAL
+// =====================================================
+
+function openPayrollForm() {
+
+    document.getElementById(
+        "payrollModal"
+    ).classList.add("show");
+
+}
+
+
+function closePayrollForm() {
+
+    document.getElementById(
+        "payrollModal"
+    ).classList.remove("show");
+
+}
+
+
+// =====================================================
+// CURRENCY
+// =====================================================
+
+function formatCurrency(value) {
+
+    return "₹" +
+        Number(value || 0)
+            .toLocaleString("en-IN");
+
+}
+
+
+// =====================================================
+// EXPORT
+// =====================================================
+
+function exportPayroll() {
+
+    if (!payrollData.length) {
+
+        alert(
+            "No payroll records available."
+        );
+
+        return;
+
+    }
+
+
+    let csv =
+        "Employee,Employee ID,Basic Salary,Allowances,Gross Salary,Deductions,Net Salary,Status\n";
+
+
+    payrollData.forEach(
+        employee => {
+
+            csv +=
+                `"${employee.employeeName}",` +
+                `"${employee.employeeId}",` +
+                `${employee.basicSalary},` +
+                `${employee.allowances},` +
+                `${employee.grossSalary},` +
+                `${employee.deductions},` +
+                `${employee.netSalary},` +
+                `"${employee.status}"\n`;
+
+        }
+    );
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type: "text/csv"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "payroll.csv";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+// =====================================================
+// PAGE NAVIGATION
+// =====================================================
+
+function goTo(page) {
+
+    window.location.href =
+        page;
+
+}
+
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+function logout() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
