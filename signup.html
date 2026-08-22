@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartHR - Sign Up</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+    <div class="app">
+
+        <div class="auth-container">
+
+            <!-- LEFT SIDE -->
+            <div class="brand-section">
+
+                <div class="brand-content">
+
+                    <div class="logo">
+                        HR
+                    </div>
+
+                    <h1>SmartHR</h1>
+
+                    <p>
+                        Human Resource Management System
+                    </p>
+
+                    <div class="feature-list">
+
+                        <div>✓ Secure Authentication</div>
+
+                        <div>✓ Employee Management</div>
+
+                        <div>✓ Attendance Tracking</div>
+
+                        <div>✓ Leave Management</div>
+
+                        <div>✓ Role Based Access</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+            <div class="form-section">
+
+                <form
+                    class="auth-form signup-form"
+                    id="signupForm"
+                >
+
+                    <div class="form-header">
+
+                        <h2>Create Account</h2>
+
+                        <p>
+                            Register your employee account
+                        </p>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+                    <div
+                        id="signupMessage"
+                        class="message"
+                        style="display: none;"
+                    ></div>
+
+
+                    <!-- NAME + EMPLOYEE ID -->
+                    <div class="two-columns">
+
+                        <div class="input-group">
+
+                            <label for="fullName">
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="John Doe"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="employeeId">
+                                Employee ID *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="employeeId"
+                                name="employeeId"
+                                placeholder="EMP001"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="input-group">
+
+                        <label for="signupEmail">
+                            Email Address *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            name="email"
+                            placeholder="john@company.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE + DEPARTMENT -->
+                    <div class="two-columns">
+
+                        <div class="input-group">
+
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="+91 9876543210"
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="department">
+                                Department
+                            </label>
+
+                            <select
+                                id="department"
+                                name="department"
+                            >
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option value="HR">
+                                    Human Resources
+                                </option>
+
+                                <option value="IT">
+                                    Information Technology
+                                </option>
+
+                                <option value="Finance">
+                                    Finance
+                                </option>
+
+                                <option value="Marketing">
+                                    Marketing
+                                </option>
+
+                                <option value="Sales">
+                                    Sales
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="two-columns">
+
+                        <div class="input-group">
+
+                            <label for="signupPassword">
+                                Password *
+                            </label>
+
+                            <input
+                                type="password"
+                                id="signupPassword"
+                                name="password"
+                                placeholder="Minimum 8 characters"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="confirmPassword">
+                                Confirm Password *
+                            </label>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD INFO -->
+                    <div class="security-note">
+
+                        🔒 Password must contain at least 8
+                        characters.
+
+                    </div>
+
+
+                    <!-- CREATE ACCOUNT -->
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Create Account
+                    </button>
+
+
+                    <!-- LOGIN LINK -->
+                    <p class="switch-text">
+
+                        Already have an account?
+
+                        <a
+                            href="./index.html"
+                            class="link-button"
+                        >
+                            Sign In
+                        </a>
+
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="./auth.js"></script>
+
+</body>
+
+</html>
