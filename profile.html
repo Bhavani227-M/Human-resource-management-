@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartHR - My Profile</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
+
+    <style>
+
+        .profile-page {
+            min-height: 100vh;
+            background: #f5f7fb;
+        }
+
+        .profile-navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .profile-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-logo {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+        .profile-brand h2 {
+            font-size: 20px;
+            color: #111827;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .profile-heading {
+            margin-bottom: 25px;
+        }
+
+        .profile-heading h1 {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .profile-heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+
+            box-shadow:
+                0 10px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .profile-user h2 {
+            font-size: 22px;
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .profile-user p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .role-badge {
+            display: inline-block;
+
+            margin-top: 8px;
+
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            color: #4338ca;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .profile-field label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #374151;
+        }
+
+        .profile-field input,
+        .profile-field select {
+            width: 100%;
+
+            height: 46px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            padding: 0 13px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            color: #1f2937;
+
+            background: white;
+        }
+
+        .profile-field input:focus,
+        .profile-field select:focus {
+            border-color: #4f46e5;
+
+            box-shadow:
+                0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .profile-field input:disabled {
+            background: #f8fafc;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .field-note {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .profile-actions {
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e5e7eb;
+
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .save-btn {
+            border: none;
+
+            padding: 12px 25px;
+
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .cancel-btn {
+            border: 1px solid #d1d5db;
+
+            padding: 12px 25px;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #374151;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .profile-message {
+            display: none;
+
+            padding: 12px 15px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+
+            .profile-navbar {
+                padding: 0 20px;
+            }
+
+            .profile-content {
+                margin: 25px auto;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-top {
+                align-items: flex-start;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .save-btn,
+            .cancel-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="profile-page">
+
+    <!-- NAVBAR -->
+
+    <nav class="profile-navbar">
+
+        <div class="profile-brand">
+
+            <div class="profile-logo">
+                HR
+            </div>
+
+            <h2>SmartHR</h2>
+
+        </div>
+
+        <a
+            href="./employee-dashboard.html"
+            class="back-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
+    <main class="profile-content">
+
+        <div class="profile-heading">
+
+            <h1>My Profile</h1>
+
+            <p>
+                View and manage your personal information.
+            </p>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <!-- PROFILE TOP -->
+
+            <div class="profile-top">
+
+                <div
+                    class="avatar"
+                    id="avatar"
+                >
+                    U
+                </div>
+
+                <div class="profile-user">
+
+                    <h2 id="profileName">
+                        Loading...
+                    </h2>
+
+                    <p id="profileEmail">
+                        Loading...
+                    </p>
+
+                    <span
+                        class="role-badge"
+                        id="profileRole"
+                    >
+                        EMPLOYEE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="profileMessage"
+                class="profile-message"
+            ></div>
+
+
+            <!-- FORM -->
+
+            <form id="profileForm">
+
+                <div class="profile-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-field">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-field">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            disabled
+                        >
+
+                        <div class="field-note">
+                            Email cannot be changed.
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE ID -->
+
+                    <div class="profile-field">
+
+                        <label for="employeeId">
+                            Employee ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="employeeId"
+                            disabled
+                        >
+
+                        <div class="field-note">
+                            Employee ID cannot be changed.
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="profile-field">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="+91 9876543210"
+                        >
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="profile-field">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select id="department">
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="HR">
+                                Human Resources
+                            </option>
+
+                            <option value="IT">
+                                Information Technology
+                            </option>
+
+                            <option value="Finance">
+                                Finance
+                            </option>
+
+                            <option value="Marketing">
+                                Marketing
+                            </option>
+
+                            <option value="Sales">
+                                Sales
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-field">
+
+                        <label for="role">
+                            Role
+                        </label>
+
+                        <input
+                            type="text"
+                            id="role"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <!-- JOIN DATE -->
+
+                    <div class="profile-field">
+
+                        <label for="joiningDate">
+                            Account Created
+                        </label>
+
+                        <input
+                            type="text"
+                            id="joiningDate"
+                            disabled
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="profile-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelBtn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const API_URL = "http://localhost:3000";
+
+
+// =====================================
+// ELEMENTS
+// =====================================
+
+const profileForm =
+    document.getElementById("profileForm");
+
+const messageBox =
+    document.getElementById("profileMessage");
+
+
+// =====================================
+// LOAD PROFILE
+// =====================================
+
+async function loadProfile() {
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/profile`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            if (response.status === 401) {
+
+                window.location.href =
+                    "./index.html";
+
+                return;
+
+            }
+
+            throw new Error(
+                data.message || "Unable to load profile."
+            );
+        }
+
+
+        const user = data.user;
+
+
+        // Header
+
+        document.getElementById(
+            "profileName"
+        ).textContent = user.name;
+
+
+        document.getElementById(
+            "profileEmail"
+        ).textContent = user.email;
+
+
+        document.getElementById(
+            "profileRole"
+        ).textContent = user.role;
+
+
+        // Avatar
+
+        const firstLetter =
+            user.name
+                ? user.name.charAt(0).toUpperCase()
+                : "U";
+
+
+        document.getElementById(
+            "avatar"
+        ).textContent = firstLetter;
+
+
+        // Form
+
+        document.getElementById(
+            "name"
+        ).value = user.name || "";
+
+
+        document.getElementById(
+            "email"
+        ).value = user.email || "";
+
+
+        document.getElementById(
+            "employeeId"
+        ).value = user.employeeId || "";
+
+
+        document.getElementById(
+            "phone"
+        ).value = user.phone || "";
+
+
+        document.getElementById(
+            "department"
+        ).value = user.department || "";
+
+
+        document.getElementById(
+            "role"
+        ).value = user.role || "";
+
+
+        if (user.createdAt) {
+
+            const date =
+                new Date(user.createdAt);
+
+            document.getElementById(
+                "joiningDate"
+            ).value =
+                date.toLocaleDateString();
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        showProfileMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =====================================
+// UPDATE PROFILE
+// =====================================
+
+profileForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById(
+                "name"
+            ).value.trim();
+
+
+        const phone =
+            document.getElementById(
+                "phone"
+            ).value.trim();
+
+
+        const department =
+            document.getElementById(
+                "department"
+            ).value;
+
+
+        if (!name) {
+
+            showProfileMessage(
+                "Full name is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/api/profile`,
+                {
+                    method: "PUT",
+
+                    credentials: "include",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name,
+                        phone,
+                        department
+
+                    })
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                showProfileMessage(
+                    data.message ||
+                    "Unable to update profile.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showProfileMessage(
+                "Profile updated successfully!",
+                "success"
+            );
+
+
+            // Update header immediately
+
+            document.getElementById(
+                "profileName"
+            ).textContent = name;
+
+
+            document.getElementById(
+                "avatar"
+            ).textContent =
+                name.charAt(0).toUpperCase();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showProfileMessage(
+                "Unable to connect to server.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================
+// CANCEL
+// =====================================
+
+document.getElementById(
+    "cancelBtn"
+).addEventListener(
+    "click",
+    loadProfile
+);
+
+
+// =====================================
+// MESSAGE
+// =====================================
+
+function showProfileMessage(
+    message,
+    type
+) {
+
+    messageBox.style.display =
+        "block";
+
+    messageBox.textContent =
+        message;
+
+
+    if (type === "success") {
+
+        messageBox.style.background =
+            "#dcfce7";
+
+        messageBox.style.color =
+            "#166534";
+
+        messageBox.style.border =
+            "1px solid #86efac";
+
+    } else {
+
+        messageBox.style.background =
+            "#fee2e2";
+
+        messageBox.style.color =
+            "#991b1b";
+
+        messageBox.style.border =
+            "1px solid #fca5a5";
+
+    }
+
+}
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
